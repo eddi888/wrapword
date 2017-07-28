@@ -1,5 +1,6 @@
 package com.example.wrapword;
 
+import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +29,21 @@ public class WräpwördApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*String maxZeilenLänge = null;
-		if (args.length>0) maxZeilenLänge	= args[0];
-		String dateiPfad = null;
-		if (args.length>1) dateiPfad = args[1];
-		String output = this.brecheDateiinhaltUm(maxZeilenLänge, dateiPfad);
-		System.out.println(output);*/
+		Options options = new Options();
+		options.addRequiredOption("l", "length", true, "max row lenght");
+		options.addRequiredOption("f","file", true, "file path location");
+
+		CommandLineParser parser = new DefaultParser();
+
+		try {
+			CommandLine cmd = parser.parse(options, args);
+			String output = this.brecheDateiinhaltUm(cmd.getOptionValue("l"), cmd.getOptionValue("f"));
+			System.out.println(output);
+		}catch (MissingOptionException e){
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp( "java -jar wordwrap.jar", options );
+		}
+
 	}
 
 	String brecheDateiinhaltUm(String maxZeilenLänge, String dateiPfad) throws IOException {
