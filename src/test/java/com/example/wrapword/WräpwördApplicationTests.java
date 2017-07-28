@@ -13,14 +13,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.wrapword.WrapwordApplication.LINE_SEPERATOR;
+import static com.example.wrapword.WräpwördApplication.LINE_SEPERATOR;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WrapwordApplicationTests {
+public class WräpwördApplicationTests {
 
 	@Autowired
-	WrapwordApplication wrapword;
+    WräpwördApplication wrapword;
 
 	@Test
 	public void contextLoads() { }
@@ -70,53 +70,53 @@ public class WrapwordApplicationTests {
 
 	@Test
 	public void testBrecheZeileUm() {
-		List<String> einfacheZeile = wrapword.brecheTextInZeilenUm("Bla", 4);
+		List<String> einfacheZeile = wrapword.brecheTextInZeilenUmWennNötig("Bla", 4);
 		Assert.assertEquals(1, einfacheZeile.size());
 		Assert.assertEquals("Bla", einfacheZeile.get(0));
 
-		List<String> doppelteZeile = wrapword.brecheTextInZeilenUm("Bl aCmb", 4);
+		List<String> doppelteZeile = wrapword.brecheTextInZeilenUmWennNötig("Bl aCmb", 4);
 		Assert.assertEquals(2, doppelteZeile.size());
 		Assert.assertEquals("Bl", doppelteZeile.get(0));
 		Assert.assertEquals("aCmb", doppelteZeile.get(1));
 
-		List<String> doppelteZeile2 = wrapword.brecheTextInZeilenUm("Bla Cmb", 4);
+		List<String> doppelteZeile2 = wrapword.brecheTextInZeilenUmWennNötig("Bla Cmb", 4);
 		Assert.assertEquals(2, doppelteZeile2.size());
 		Assert.assertEquals("Bla", doppelteZeile2.get(0));
 		Assert.assertEquals("Cmb", doppelteZeile2.get(1));
 
-		List<String> doppelteZeile3 = wrapword.brecheTextInZeilenUm(" BlaCmb", 4);
+		List<String> doppelteZeile3 = wrapword.brecheTextInZeilenUmWennNötig(" BlaCmb", 4);
 		Assert.assertEquals(3, doppelteZeile3.size());
 		Assert.assertEquals("", doppelteZeile3.get(0));
 		Assert.assertEquals("BlaC", doppelteZeile3.get(1));
 		Assert.assertEquals("mb", doppelteZeile3.get(2));
 
-		List<String> gebrochenesWord = wrapword.brecheTextInZeilenUm("BlaCmb", 4);
+		List<String> gebrochenesWord = wrapword.brecheTextInZeilenUmWennNötig("BlaCmb", 4);
 		Assert.assertEquals(2, gebrochenesWord.size());
 		Assert.assertEquals("BlaC", gebrochenesWord.get(0));
 		Assert.assertEquals("mb", gebrochenesWord.get(1));
 
-		List<String> volleZeile = wrapword.brecheTextInZeilenUm("A BC", 4);
+		List<String> volleZeile = wrapword.brecheTextInZeilenUmWennNötig("A BC", 4);
 		Assert.assertEquals(1, volleZeile.size());
 		Assert.assertEquals("A BC", volleZeile.get(0));
 
-		List<String> zweiVolleZeilen = wrapword.brecheTextInZeilenUm("A BC DE F", 4);
-		Assert.assertEquals(2, zweiVolleZeilen.size());
+		List<String> zweiVolleZeilen = wrapword.brecheTextInZeilenUmWennNötig("A BC DE F", 4);
+		Assert.assertEquals("bla bla bla", 2, zweiVolleZeilen.size());
 		Assert.assertEquals("A BC", zweiVolleZeilen.get(0));
 		Assert.assertEquals("DE F", zweiVolleZeilen.get(1));
 
-		List<String> leereZeilen = wrapword.brecheTextInZeilenUm("", 4);
+		List<String> leereZeilen = wrapword.brecheTextInZeilenUmWennNötig("", 4);
 		Assert.assertEquals(1, leereZeilen.size());
 		Assert.assertEquals("", leereZeilen.get(0));
 
-		List<String> eineLeerzeichenZeilen = wrapword.brecheTextInZeilenUm(" ", 4);
+		List<String> eineLeerzeichenZeilen = wrapword.brecheTextInZeilenUmWennNötig(" ", 4);
 		Assert.assertEquals(1, eineLeerzeichenZeilen.size());
 		Assert.assertEquals(" ", eineLeerzeichenZeilen.get(0));
 
-		List<String> zweiLeerzeichenZeilen = wrapword.brecheTextInZeilenUm("A  B", 4);
+		List<String> zweiLeerzeichenZeilen = wrapword.brecheTextInZeilenUmWennNötig("A  B", 4);
 		Assert.assertEquals(1, zweiLeerzeichenZeilen.size());
 		Assert.assertEquals("A  B", zweiLeerzeichenZeilen.get(0));
 
-		List<String> neunLeerzeichenZeilen = wrapword.brecheTextInZeilenUm("         ", 4);
+		List<String> neunLeerzeichenZeilen = wrapword.brecheTextInZeilenUmWennNötig("         ", 4);
 		Assert.assertEquals(2, neunLeerzeichenZeilen.size());
 		Assert.assertEquals("    ", neunLeerzeichenZeilen.get(0));
 		Assert.assertEquals("    ", neunLeerzeichenZeilen.get(1));
